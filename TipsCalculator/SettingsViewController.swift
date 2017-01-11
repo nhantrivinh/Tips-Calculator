@@ -16,23 +16,29 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var tfTip3: UITextField!
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         lblInstruction.alpha = 0
+        var textfields = [tfTip1, tfTip2, tfTip3]
+        for i in 0...textfields.count - 1 {
+            let key = "KEY_TIP_\(i+1)"
+            let amount = UserDefaults.standard.double(forKey: key)
+            print(textfields)
+            let textfield = textfields[i]
+            textfield?.placeholder = "\(amount)%"
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tfTip1.becomeFirstResponder()
     }
 
     @IBAction func btnColorTap(_ sender: UIButton) {
         let color = sender.backgroundColor
-        
         let data : NSData = NSKeyedArchiver.archivedData(withRootObject: color) as NSData
         UserDefaults.standard.set(data, forKey: KEY_COLOR)
         
-        lblInstruction.alpha = 0
-        UIView.animate(withDuration: 1, animations: {
-            self.lblInstruction.alpha = 1
-        }) { (complete) in
-            UIView.animate(withDuration: 0.3, delay: 2, options: .curveEaseOut, animations: {
-                self.lblInstruction.alpha = 0
-            }, completion: nil)
-        }
+        lblInstruction.fade()
     }
 
     @IBAction func changedTipAmount(_ sender: UITextField) {
