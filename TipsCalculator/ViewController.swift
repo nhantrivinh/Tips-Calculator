@@ -19,6 +19,11 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        tfBill.becomeFirstResponder()
+        checkForSavedColor()
+    }
+    
+    func checkForSavedColor() {
         guard let data = UserDefaults.standard.object(forKey: KEY_COLOR) as? NSData else { return }
         guard let color = NSKeyedUnarchiver.unarchiveObject(with: data as Data) as? UIColor else { return }
         viewLightSaber.backgroundColor = color

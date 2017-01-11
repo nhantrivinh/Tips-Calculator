@@ -114,6 +114,9 @@
                             <constraint firstItem="ZF9-QA-Wtc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="18" id="EAC-Tz-LOD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ZF9-QA-Wtc" secondAttribute="trailing" constant="18" id="xhi-rm-YQG"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="xAP-hh-sjN" appends="YES" id="op7-Rd-oWF"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Tip Calculator" id="fC6-ed-gEz">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Sgb-6H-edU">
@@ -138,7 +141,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="xAP-hh-sjN">
                     <connections>
-                        <action selector="onTap:" destination="BYZ-38-t0r" id="DjA-Pm-3Jf"/>
+                        <action selector="onTap:" destination="BYZ-38-t0r" id="tGj-q1-Ryk"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
