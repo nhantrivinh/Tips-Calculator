@@ -11,6 +11,9 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var lblInstruction: UILabel!
+    @IBOutlet weak var tfTip1: UITextField!
+    @IBOutlet weak var tfTip2: UITextField!
+    @IBOutlet weak var tfTip3: UITextField!
     
     override func viewWillAppear(_ animated: Bool) {
         lblInstruction.alpha = 0
@@ -32,4 +35,18 @@ class SettingsViewController: UIViewController {
         }
     }
 
+    @IBAction func changedTipAmount(_ sender: UITextField) {
+        print("change tip amount")
+        let amount = Double(sender.text!) ?? 0
+        let defaults = UserDefaults.standard
+        if sender == tfTip1 {
+            defaults.set(amount, forKey: KEY_TIP_1)
+        } else if sender == tfTip2 {
+            defaults.set(amount, forKey: KEY_TIP_2)
+        } else {
+            defaults.set(amount, forKey: KEY_TIP_3)
+        }
+        
+        
+    }
 }

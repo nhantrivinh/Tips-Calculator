@@ -16,6 +16,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var scTip: UISegmentedControl!
     @IBOutlet weak var viewLightSaber: UIView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+
+//        if let tip1 = tip1 = defaults.object(forKey: KEY_TIP_1) as? Double {
+//            
+//        }
+        let defaults = UserDefaults.standard
+        guard let tip1 = defaults.object(forKey: KEY_TIP_1) as? Double, let tip2 = defaults.object(forKey: KEY_TIP_2) as? Double, let tip3 = defaults.object(forKey: KEY_TIP_3) as? Double else { return }
+        for i in 0...2 {
+            let title = "tip\(i + 1)"
+            scTip.setTitle(title, forSegmentAt: i)
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
