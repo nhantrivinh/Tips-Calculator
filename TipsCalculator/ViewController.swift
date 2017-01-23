@@ -34,6 +34,18 @@ class ViewController: UIViewController {
     
     func checkForUpdatedTipsAmount() {
         let defaults = UserDefaults.standard
+        if let bill = defaults.object(forKey: KEY_BILL_AMOUNT) as? Double {
+            if bill != 0 {
+                self.tfBill.text = "\(bill)"
+            }
+        }
+        if let tip = defaults.object(forKey: KEY_TIP_AMOUNT) as? Double {
+            self.lblTip.text = "\(tip) \(currencySymbol)"
+        }
+        if let selectedSegment = defaults.object(forKey: KEY_SELECTED_SEGMENT) as? Int {
+            self.scTip.selectedSegmentIndex = selectedSegment
+        }
+        
         guard let tip1 = defaults.object(forKey: KEY_TIP_1) as? Double, let tip2 = defaults.object(forKey: KEY_TIP_2) as? Double, let tip3 = defaults.object(forKey: KEY_TIP_3) as? Double else { return }
         for i in 0...2 {
             let key = "KEY_TIP_\(i + 1)"
@@ -92,7 +104,7 @@ class ViewController: UIViewController {
             let defaults = UserDefaults.standard
             let total = defaults.object(forKey: KEY_TOTAL_AMOUNT) as! Double
             print("TOTAL:", total)
-            self.lblTotal.text = "\(total)"
+            self.lblTotal.text = "\(total) \(currencySymbol)"
         }
     }
     
@@ -104,6 +116,7 @@ class ViewController: UIViewController {
         print(currencyCode)
         print(currencySymbol)
         print(self.currencySymbol)
+        self.currencySymbol = currencyCode ?? "USD"
     }
     
     
@@ -118,13 +131,18 @@ class ViewController: UIViewController {
         print(tipPercentages)
         let total = bill + tip
         let defaults = UserDefaults.standard
+        let selectedSegment = self.scTip.selectedSegmentIndex
         defaults.set(total, forKey: KEY_TOTAL_AMOUNT)
+        defaults.set(selectedSegment, forKey: KEY_SELECTED_SEGMENT)
+        defaults.set(bill, forKey: KEY_BILL_AMOUNT)
+        defaults.set(tip, forKey: KEY_TIP_AMOUNT)
         defaults.synchronize()
         print("Saving as total:", total)
         let loadedTotal = UserDefaults.standard.object(forKey: KEY_TOTAL_AMOUNT)
         print("Loaded total:", loadedTotal)
         lblTip.text = String(format: "%.2f \(currencySymbol)", tip)
         lblTotal.text = String(format: "%.2f \(currencySymbol)", total)
+        
     }
     
 

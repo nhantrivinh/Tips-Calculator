@@ -14,10 +14,12 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var tfTip1: UITextField!
     @IBOutlet weak var tfTip2: UITextField!
     @IBOutlet weak var tfTip3: UITextField!
+    @IBOutlet weak var lblError: UILabel!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         lblInstruction.alpha = 0
+        lblError.alpha = 0
         var textfields = [tfTip1, tfTip2, tfTip3]
         for i in 0...textfields.count - 1 {
             let key = "KEY_TIP_\(i+1)"
