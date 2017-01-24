@@ -28,6 +28,29 @@ extension UIView {
     }
 }
 
+extension String {
+    struct formatter {
+        static let instance = NumberFormatter()
+    }
+    
+    func isDouble() -> Bool {
+        let value = formatter.instance.number(from: self)?.doubleValue
+        if value != nil {
+            return true
+        }
+        return false
+    }
+    
+    
+    func isInt() -> Bool {
+        let value = formatter.instance.number(from: self)?.intValue
+        if value != nil {
+            return true
+        }
+        return false
+    }
+}
+
 extension UserDefaults {
     func set(_ color: UIColor, forKey key: String) {
         set(NSKeyedArchiver.archivedData(withRootObject: color), forKey: key)

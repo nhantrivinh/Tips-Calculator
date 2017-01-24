@@ -20,14 +20,7 @@ class SettingsViewController: UIViewController {
         super.viewWillAppear(animated)
         lblInstruction.alpha = 0
         lblError.alpha = 0
-        var textfields = [tfTip1, tfTip2, tfTip3]
-        for i in 0...textfields.count - 1 {
-            let key = "KEY_TIP_\(i+1)"
-            let amount = UserDefaults.standard.double(forKey: key)
-            print(textfields)
-            let textfield = textfields[i]
-            textfield?.placeholder = "\(amount)%"
-        }
+        updateTfPlaceHoldersFromMemory()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,6 +37,12 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func changedTipAmount(_ sender: UITextField) {
+        if let tf = sender as? UITextField {
+            if !tf.text!.isDouble() && tf.text != "" {
+                updateTfText(sender: tf)
+            }
+        }
+        
         print("change tip amount")
         let amount = Double(sender.text!) ?? 0
         let defaults = UserDefaults.standard
@@ -54,7 +53,33 @@ class SettingsViewController: UIViewController {
         } else {
             defaults.set(amount, forKey: KEY_TIP_3)
         }
-        
-        
+    }
+    
+    func updateTfPlaceHoldersFromMemory(updateTextToo: Bool = false) {
+        var textfields = [tfTip1, tfTip2, tfTip3]
+        for i in 0...textfields.count - 1 {
+            let key = "KEY_TIP_\(i+1)"
+            let amount = UserDefaults.standard.double(forKey: key)
+            print(textfields)
+            let textfield = textfields[i]
+            textfield?.placeholder = "\(amount)%"
+            if updateTextToo {
+                textfield?.text = "\(amount)"
+            }
+        }
+    }
+    
+    func updateTfText(sender: UITextField) {
+        var textfields = [tfTip1, tfTip2, tfTip3]
+        for i in 0...textfields.count - 1{
+            let textfield = textfields[i]
+            if sender == textfield {
+                let key = "KEY_TIP_\(i+1)"
+                let amount = UserDefaults.standard.double(forKey: key)
+                sender.placeholder = "\(amount)%"
+                sender.text = String(amount)
+                return
+            }
+        }
     }
 }

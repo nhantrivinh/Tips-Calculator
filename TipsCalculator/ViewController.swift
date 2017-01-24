@@ -118,14 +118,18 @@ class ViewController: UIViewController {
         print(self.currencySymbol)
         self.currencySymbol = currencyCode ?? "USD"
     }
-    
-    
 
     @IBAction func onTap(_ sender: Any) {
 //        view.endEditing(true)
     }
     
     @IBAction func calculateTips(_ sender: Any) {
+        if let tf = sender as? UITextField {
+            if !tf.text!.isDouble() {
+                tf.text = ""
+            }
+        }
+        
         let bill = Double(tfBill.text!) ?? 0
         let tip = (bill * tipPercentages[scTip.selectedSegmentIndex])/100
         print(tipPercentages)
@@ -142,9 +146,7 @@ class ViewController: UIViewController {
         print("Loaded total:", loadedTotal)
         lblTip.text = String(format: "%.2f \(currencySymbol)", tip)
         lblTotal.text = String(format: "%.2f \(currencySymbol)", total)
-        
     }
-    
-
 }
+
 
